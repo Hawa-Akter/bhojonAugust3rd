@@ -147,24 +147,8 @@ function addItemsIntoSuborder(tr) {
     foodIdData,
   };
 
-  // if (cr) {
-  //   const selectedDiv = [...document.querySelectorAll(".split-selected")];
-  //   selectedDiv.map((selected) => {
-  //     const subOrderTble = selected.querySelector("#subOrder_table_data");
-
-  //     const splitContent = `<tr id="${splittedItems.foodIdData}">
-  //             <td scope="row">${splittedItems.foodNameData}</td>
-  //             <td>${splittedItems.varientData}</td>
-  //             <td>${splittedItems.priceData}</td>
-  //             <td class="foodQty">${splittedItems.ratio}</td>
-  //             <td class="foodTotal">${splittedItems.subTotal}</td>
-  //             </tr>`;
-
-  //     return (subOrderTble.innerHTML += splitContent);
-  //   });
-  // }
-
   let trs = [...document.querySelectorAll("#subOrder_table_data tr")];
+
   if (trs.length === 0) {
     const selectedDiv = document.querySelector(
       ".split-selected #subOrder_table_data"
@@ -177,42 +161,30 @@ function addItemsIntoSuborder(tr) {
               <td class="foodQty">${splittedItems.ratio + 1}</td>
               <td class="foodTotal">${splittedItems.subTotal}</td>
               </tr>`;
-    return (selectedDiv.innerHTML += splitContent);
+    selectedDiv.innerHTML += splitContent;
   } else {
-    trs.map((tr) => {
-      console.log("bool", tr.id === foodIdData);
-      if (tr.id === foodIdData) {
-        console.log("first");
-        // cr = false;
-        const qtyElement = tr.getElementsByClassName("foodQty")[0];
-        let qty = parseInt(qtyElement?.textContent);
-        return (qtyElement.innerHTML = qty + 1);
-      } else {
-        if (tr.id === foodIdData) {
-          console.log("bool sec", tr.id === foodIdData);
-          // cr = false;
-          const qtyElement = tr.getElementsByClassName("foodQty")[0];
-          let qty = parseInt(qtyElement?.textContent);
-          return (qtyElement.innerHTML = qty + 1);
-        } else {
-          console.log("bool else", tr.id === foodIdData);
+    const myIds = trs.find(item => item.id === foodIdData);
 
-          const selectedDiv = document.querySelector(
-            ".split-selected #subOrder_table_data"
-          );
+  if(myIds !== undefined) {
+    const foodQty = myIds.querySelector('.foodQty');
+    let qty = parseInt(foodQty?.textContent);
+    return (foodQty.innerHTML = qty + 1);
 
-          const splitContent = `<tr id="${splittedItems.foodIdData}">
-                    <td scope="row">${splittedItems.foodNameData}</td>
-                    <td>${splittedItems.varientData}</td>
-                    <td>${splittedItems.priceData}</td>
-                    <td class="foodQty">${splittedItems.ratio + 1}</td>
-                    <td class="foodTotal">${splittedItems.subTotal}</td>
-                    </tr>`;
-          return (selectedDiv.innerHTML += splitContent);
-        }
-      }
-    });
+  } else {
+    const selectedDiv = document.querySelector(
+      ".split-selected #subOrder_table_data"
+    );
+
+    const splitContent = `<tr id="${splittedItems.foodIdData}">
+      <td scope="row">${splittedItems.foodNameData}</td>
+      <td>${splittedItems.varientData}</td>
+      <td>${splittedItems.priceData}</td>
+      <td class="foodQty">${splittedItems.ratio + 1}</td>
+      <td class="foodTotal">${splittedItems.subTotal}</td>
+      </tr>`;
+    selectedDiv.innerHTML += splitContent;
   }
+}
 
   // ratio++
 
